@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generador de nombres personalizable para juegos 2025. Crea nombres únicos para personajes o mundos, gratis y con exportación JSON.">
+    <meta name="keywords" content="name generator, game dev name tool, fantasy name generator, sci-fi names, medieval names, custom name creator, gamedev tools 2025, free name generator online">
+    <title>Generador de Nombres Pro - Genio043 Tools 2025</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué hace el Generador de Nombres Pro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Crea nombres únicos para personajes, mundos o ítems en juegos, con opciones personalizables y exportación JSON para Unity o Godot."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Es gratis el Generador de Nombres de Genio043?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, es 100% gratis, online y en español, diseñado para gamedevs indie en 2025."
+          }
+        }
+      ]
+    }
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1e1e1e; color: #ddd; text-align: center; margin: 20px; }
+        h1 { font-size: 28px; color: #00ccff; text-shadow: 0 0 10px #00ccff; }
+        .section { margin: 20px 0; padding: 15px; background: #2a2a2a; border-radius: 8px; }
+        label { display: block; margin: 5px 0; color: #bbb; }
+        input, select, textarea { padding: 8px; width: 200px; background: #333; color: #fff; border: 1px solid #444; border-radius: 4px; }
+        textarea { height: 60px; resize: vertical; }
+        button { padding: 10px 20px; background: #00ccff; color: #fff; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0099cc; }
+        #result { margin: 20px; font-size: 18px; color: #00ff99; }
+        #result ul { list-style: none; padding: 0; }
+        #result li { margin: 10px 0; }
+        footer { background: #2a2a2a; padding: 15px 0px; text-align: center; position: relative; bottom: 0; width: 100%; border-top: 1px solid #00ccff; }
+        footer p { margin: 0; font-size: 16px; color: #bbb; }
+        footer a { color: #00ff99; text-decoration: none; font-weight: bold; transition: all 0.3s; }
+        footer a:hover { color: #1e1e1e; background: #00ff99; padding: 5px 10px; border-radius: 4px; box-shadow: 0 0 10px #00ff99; }
+        footer a:visited { color: #ff9900; }
+    </style>
+</head>
+<body>
+    <h1>Generador de Nombres Pro</h1>
+    <p>Crea nombres únicos con tus propias reglas o usa temas predefinidos.</p>
+    <div class="section">
+        <label>Tema:</label>
+        <select id="theme" onchange="loadPreset()">
+            <option value="custom">Personalizado</option>
+            <option value="fantasy">Fantasía</option>
+            <option value="scifi">Sci-Fi</option>
+            <option value="medieval">Medieval</option>
+        </select>
+        <label>Prefijos (separados por coma):</label>
+        <textarea id="prefixes">Dra, El, Tho</textarea>
+        <label>Raíces (separados por coma):</label>
+        <textarea id="roots">gon, rith, mir</textarea>
+        <label>Sufijos (separados por coma):</label>
+        <textarea id="suffixes">ar, iel, on</textarea>
+        <label>Cantidad:</label>
+        <input type="number" id="count" min="1" max="10" value="5">
+        <button onclick="generateNames()">Generar</button>
+        <button onclick="exportJSON()">Exportar JSON</button>
+    </div>
+    <div id="result"></div>
+    <footer><p>Volver a <a href="https://genio043.github.io/">Genio043 Tools</a></p></footer>
+    <script>
+        const nameParts = {
+            fantasy: { prefix: ["Dra", "El", "Tho"], root: ["gon", "rith", "mir"], suffix: ["ar", "iel", "on"] },
+            scifi: { prefix: ["Zor", "Ky", "Xen"], root: ["tek", "lon", "vax"], suffix: ["is", "or", "um"] },
+            medieval: { prefix: ["Sir", "Ald", "God"], root: ["win", "ric", "frey"], suffix: ["ton", "mund", "ric"] }
+        };
+
+        function loadPreset() {
+            const theme = document.getElementById("theme").value;
+            if (theme !== "custom") {
+                const parts = nameParts[theme];
+                document.getElementById("prefixes").value = parts.prefix.join(", ");
+                document.getElementById("roots").value = parts.root.join(", ");
+                document.getElementById("suffixes").value = parts.suffix.join(", ");
+            }
+        }
+
+        function generateNames() {
+            const theme = document.getElementById("theme").value;
+            const prefixes = document.getElementById("prefixes").value.split(",").map(s => s.trim());
+            const roots = document.getElementById("roots").value.split(",").map(s => s.trim());
+            const suffixes = document.getElementById("suffixes").value.split(",").map(s => s.trim());
+            const count = parseInt(document.getElementById("count").value);
+            let maxAttempts = count * 10; // Cambiado a let
+            const uniqueNames = new Set();
+
+            while (uniqueNames.size < count && uniqueNames.size < prefixes.length * roots.length * suffixes.length && maxAttempts > 0) {
+                const p = prefixes[Math.floor(Math.random() * prefixes.length)];
+                const r = roots[Math.floor(Math.random() * roots.length)];
+                const s = suffixes[Math.floor(Math.random() * suffixes.length)];
+                uniqueNames.add(`${p}${r}${s}`);
+                maxAttempts--;
+            }
+
+            const names = Array.from(uniqueNames).slice(0, count); // Limitar a la cantidad pedida
+            displayNames(names);
+            return names;
+        }
+
+        function displayNames(names) {
+            const result = document.getElementById("result");
+            result.innerHTML = "<ul>" + names.map(name => `<li>${name}</li>`).join("") + "</ul>";
+        }
+
+        function exportJSON() {
+            const names = generateNames();
+            const data = { names };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "names.json";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
