@@ -39,6 +39,7 @@
         textarea { height: 60px; resize: vertical; }
         button { padding: 10px 20px; background: #00ccff; color: #fff; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
         button:hover { background: #0099cc; }
+        button:disabled { background: #666; cursor: not-allowed; }
         #result { margin: 20px; font-size: 18px; color: #00ff99; }
         #result ul { list-style: none; padding: 0; }
         #result li { margin: 10px 0; }
@@ -70,7 +71,7 @@
         <label>Cantidad:</label>
         <input type="number" id="count" min="1" max="10" value="5">
         <button onclick="generateNames()">Generar</button>
-        <button onclick="exportJSON()">Exportar JSON</button>
+        <button id="exportBtn" onclick="exportJSON()" disabled>Exportar JSON</button>
     </div>
     <div id="result"></div>
     <div class="donate">
@@ -79,6 +80,8 @@
     <footer><p>Volver a <a href="https://genio043.github.io/">Genio043 Tools</a></p></footer>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0463493221079646" crossorigin="anonymous"></script>
     <script>
+        let currentNames = [];
+
         const nameParts = {
             fantasy: { prefix: ["Dra", "El", "Tho"], root: ["gon", "rith", "mir"], suffix: ["ar", "iel", "on"] },
             scifi: { prefix: ["Zor", "Ky", "Xen"], root: ["tek", "lon", "vax"], suffix: ["is", "or", "um"] },
@@ -101,7 +104,7 @@
             const roots = document.getElementById("roots").value.split(",").map(s => s.trim());
             const suffixes = document.getElementById("suffixes").value.split(",").map(s => s.trim());
             const count = parseInt(document.getElementById("count").value);
-            let maxAttempts = count * 10; // Cambiado a let
+            let maxAttempts = count * 10;
             const uniqueNames = new Set();
 
             while (uniqueNames.size < count && uniqueNames.size < prefixes.length * roots.length * suffixes.length && maxAttempts > 0) {
@@ -112,9 +115,9 @@
                 maxAttempts--;
             }
 
-            const names = Array.from(uniqueNames).slice(0, count); // Limitar a la cantidad pedida
-            displayNames(names);
-            return names;
+            currentNames = Array.from(uniqueNames).slice(0, count);
+            displayNames(currentNames);
+            document.getElementById("exportBtn").disabled = false;
         }
 
         function displayNames(names) {
@@ -123,8 +126,7 @@
         }
 
         function exportJSON() {
-            const names = generateNames();
-            const data = { names };
+            const data = { names: currentNames };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
