@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Generador de nombres personalizable para juegos 2025. Crea nombres únicos para personajes o mundos, gratis y con exportación JSON.">
+    <meta name="description" content="Customizable name generator for games 2025. Create unique names for characters or worlds, free with JSON export.">
     <meta name="keywords" content="name generator, game dev name tool, fantasy name generator, sci-fi names, medieval names, custom name creator, gamedev tools 2025, free name generator online">
-    <title>Generador de Nombres Pro - Genio043 Tools 2025</title>
+    <title>Generador de Nombres Pro - Genio043's Tools 2025</title>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -13,18 +13,18 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "¿Qué hace el Generador de Nombres Pro?",
+          "name": "What does the Pro Name Generator do?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Crea nombres únicos para personajes, mundos o ítems en juegos, con opciones personalizables y exportación JSON para Unity o Godot."
+            "text": "It creates unique names for characters, worlds, or items in games, with customizable options and JSON export for Unity or Godot."
           }
         },
         {
           "@type": "Question",
-          "name": "¿Es gratis el Generador de Nombres de Genio043?",
+          "name": "Is the Genio043 Name Generator free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sí, es 100% gratis, online y en español, diseñado para gamedevs indie en 2025."
+            "text": "Yes, it is 100% free, online, and designed for indie game developers in 2025."
           }
         }
       ]
@@ -52,32 +52,32 @@
     </style>
 </head>
 <body>
-    <h1>Generador de Nombres Pro</h1>
-    <p>Crea nombres únicos con tus propias reglas o usa temas predefinidos.</p>
+    <h1>Pro Name Generator</h1>
+    <p>Create unique names with your own rules or use predefined themes.</p>
     <div class="section">
-        <label>Tema:</label>
+        <label>Theme:</label>
         <select id="theme" onchange="loadPreset()">
-            <option value="custom">Personalizado</option>
-            <option value="fantasy">Fantasía</option>
+            <option value="custom">Custom</option>
+            <option value="fantasy">Fantasy</option>
             <option value="scifi">Sci-Fi</option>
             <option value="medieval">Medieval</option>
         </select>
-        <label>Prefijos (separados por coma):</label>
+        <label>Prefixes (comma separated):</label>
         <textarea id="prefixes">Dra, El, Tho</textarea>
-        <label>Raíces (separados por coma):</label>
+        <label>Roots (comma separated):</label>
         <textarea id="roots">gon, rith, mir</textarea>
-        <label>Sufijos (separados por coma):</label>
+        <label>Suffixes (comma separated):</label>
         <textarea id="suffixes">ar, iel, on</textarea>
-        <label>Cantidad:</label>
+        <label>Quantity:</label>
         <input type="number" id="count" min="1" max="10" value="5">
-        <button onclick="generateNames()">Generar</button>
-        <button id="exportBtn" onclick="exportJSON()" disabled>Exportar JSON</button>
+        <button onclick="generateNames()">Generate</button>
+        <button id="exportBtn" onclick="exportJSON()" disabled>Export JSON</button>
     </div>
     <div id="result"></div>
     <div class="donate">
-        <p>¿Te sirvió? <a href="https://buymeacoffee.com/genio043" target="_blank">Cómprame un té :)</a></p>
+        <p>Did you find this useful? <a href="https://buymeacoffee.com/genio043" target="_blank">Buy me a tea :)</a></p>
     </div>
-    <footer><p>Volver a <a href="https://genio043.github.io/">Genio043 Tools</a></p></footer>
+    <footer><p>Back to <a href="https://genio043.github.io/">Genio043's Tools</a></p></footer>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0463493221079646" crossorigin="anonymous"></script>
     <script>
         let currentNames = [];
